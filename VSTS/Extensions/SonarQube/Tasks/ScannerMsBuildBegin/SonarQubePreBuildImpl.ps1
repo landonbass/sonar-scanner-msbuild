@@ -13,7 +13,7 @@ function InvokePreBuildTask
     Write-Verbose "Dashboard Url: $dashboardUrl"
     
     ResetTaskContext
-    StoreParametersInTaskContext $serviceEndpoint.Url $bootstrapperPath $dashboardUrl $includeFullReport $breakBuild
+    StoreParametersInTaskContext $serviceEndpoint.Url $bootstrapperPath $dashboardUrl $includeFullReport $breakBuild $breakBuildPR
     StoreSensitiveParametersInTaskContext $serviceEndpoint.Authorization.Parameters.UserName $serviceEndpoint.Authorization.Parameters.Password $dbUsername $dbPassword
 
     $cmdLineArgs = UpdateArgsForPullRequestAnalysis $cmdLineArgs $serviceEndpoint
@@ -34,13 +34,15 @@ function StoreParametersInTaskContext
 		  [string]$bootstrapperPath,
 		  [string]$dashboardUrl,
           [string]$includeFullReport, 
-          [string]$breakBuild
+          [string]$breakBuild,
+		  [string]$breakBuildPR
     )
 	
     SetTaskContextVariable "MSBuild.SonarQube.Internal.BootstrapperPath" $bootstrapperPath    
     SetTaskContextVariable "MSBuild.SonarQube.HostUrl" $hostUrl
     SetTaskContextVariable "MSBuild.SonarQube.ProjectUri" $dashboardUrl   
     SetTaskContextVariable "MSBuild.SonarQube.Internal.BreakBuild" $breakBuild
+	SetTaskContextVariable "MSBuild.SonarQube.Internal.BreakBuildPR" $breakBuildPR
     SetTaskContextVariable "MSBuild.SonarQube.Internal.IncludeFullReport" $includeFullReport        
 }
 

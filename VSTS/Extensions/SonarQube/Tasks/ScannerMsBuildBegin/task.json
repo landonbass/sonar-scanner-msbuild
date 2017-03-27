@@ -105,6 +105,15 @@
             "required": false,
             "helpMarkDown": "This option will delay the build until SonarQube analysis is completed. [More information](http://redirect.sonarsource.com/doc/install-configure-scanner-tfs-ts.html)",
             "groupName": "advanced"
+        },
+		{
+            "name": "breakBuildPR",
+            "type": "boolean",
+            "defaultValue": "false",
+            "label": "Fail the build on quality gate failure when the request is a PR",
+            "required": false,
+            "helpMarkDown": "This option will delay the build until SonarQube analysis is completed. [More information](http://redirect.sonarsource.com/doc/install-configure-scanner-tfs-ts.html)",
+            "groupName": "advanced"
         }
     ],
     "execution": {

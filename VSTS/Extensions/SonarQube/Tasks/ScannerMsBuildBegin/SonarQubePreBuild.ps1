@@ -10,7 +10,8 @@ param(
     [string]$cmdLineArgs,
     [string]$configFile,
     [string]$includeFullReport,
-    [string]$breakBuild
+    [string]$breakBuild,
+	[string]$breakBuildPR
 )
 
 Write-Verbose "Starting SonarQube Pre-Build Setup Step"
@@ -22,6 +23,7 @@ Write-Verbose "cmdLineArgs = $cmdLineArgs"
 Write-Verbose "configFile = $configFile"
 Write-Verbose "dbConnectionString = $dbUrl"
 Write-Verbose "breakBuild = $breakBuild"
+Write-Verbose "breakBuildPR = $breakBuildPR"
 Write-Verbose "includeFullReport = $includeFullReport"
 
 import-module "Microsoft.TeamFoundation.DistributedTask.Task.Common"
@@ -31,7 +33,7 @@ import-module "Microsoft.TeamFoundation.DistributedTask.Task.Internal"
 
 # During PR builds only an "issues mode" analysis is allowed. The resulting issues are posted as code review comments. 
 # The feature can be toggled by the user and is OFF by default.  
-ExitOnPRBuild
+if ($breakBuildPR) {ExitOnPRBuild}
 
 . $PSScriptRoot\SonarQubePreBuildImpl.ps1
 
